@@ -93,7 +93,23 @@ weather_bootstrap|>
   ggplot(aes(x=r_squared))+
   geom_density() + ggtitle('distribution of r_squared ')
 ```
+
+
 The distribution is relatively normal but still skewed to the left a little bit. The density is highest when values are around 0.92.
 
 
+## 2.5% and 97.5% quantiles and CI
 
+
+```{r}
+CI_rsquared_log_beta12 =
+  tibble(
+    upper_beta12= weather_bootstrap |> pull(log_beta12) |> quantile(0.975, na.rm = TRUE),
+    lower_beta12= weather_bootstrap |> pull(log_beta12) |> quantile(0.025, na.rm = TRUE),
+    upper_rsquared= weather_bootstrap |> pull(r_squared) |> quantile(0.975, na.rm = TRUE),
+    lower_rsquared= weather_bootstrap |> pull(r_squared) |> quantile(0.025, na.rm = TRUE))
+
+CI_rsquared_log_beta12
+```
+
+2.5% and 97.5% quantiles (confident Interval) of R squared and log(beta 1*beta 2) are shown above.
