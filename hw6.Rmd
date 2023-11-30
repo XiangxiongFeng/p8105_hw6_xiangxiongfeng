@@ -59,15 +59,17 @@ weather_bootstrap =
   mutate(
     models = map(strap, \(df) lm(tmax ~ tmin + prcp, data = df)),
     tidy_results = map(models, broom::tidy),
-    glance_rsqures = map(models, broom::glance))
-    
+    glance_results = map(models, broom::glance))|>
+  select(tidy_results, glance_results, .id)|>
+  unnest(tidy_results, glance_results)|>
+  select(.id, term, estimate, r.squared)|>
+  group_by(.id)|>
+  summarize(log_beta = log(estimate[2]) + log(estimate[3]),
+            r_squared = r.squared)|>
+  distinct()
+
 ```
-    results = map(models, broom::tidy)) |> 
-  select(-strap, -models) |> 
-  unnest(results) |> 
-  group_by(term) |> 
-  summarize(boot_se = sd(estimate))
-```
+
 
 
 

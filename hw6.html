@@ -381,10 +381,16 @@ display: none;
   mutate(
     models = map(strap, \(df) lm(tmax ~ tmin + prcp, data = df)),
     tidy_results = map(models, broom::tidy),
-    glance_rsqures = map(models, broom::glance))</code></pre>
-<pre><code>results = map(models, broom::tidy)) |&gt; </code></pre>
-<p>select(-strap, -models) |&gt; unnest(results) |&gt; group_by(term)
-|&gt; summarize(boot_se = sd(estimate)) ```</p>
+    glance_results = map(models, broom::glance))|&gt;
+  select(tidy_results, glance_results, .id)|&gt;
+  unnest(tidy_results, glance_results)|&gt;
+  select(.id, term, estimate, r.squared)|&gt;
+  group_by(.id)|&gt;
+  summarize(log_beta = log(estimate[2]) + log(estimate[3]),
+            r_squared = r.squared)|&gt;
+  distinct()</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;.id&#39;. You can override using the `.groups`
+## argument.</code></pre>
 </div>
 
 
