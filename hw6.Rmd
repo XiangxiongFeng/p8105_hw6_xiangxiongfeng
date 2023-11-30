@@ -34,7 +34,7 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 # Problem 2 
 
-Download dataset
+## Download dataset
 
 ```{r}
 weather_df = 
@@ -50,7 +50,7 @@ weather_df =
   select(name, id, everything())
 ```
 
-Bootstrap and linear model
+## Bootstrap and linear model
 
 ```{r}
 weather_bootstrap =
@@ -64,13 +64,29 @@ weather_bootstrap =
   unnest(tidy_results, glance_results)|>
   select(.id, term, estimate, r.squared)|>
   group_by(.id)|>
-  summarize(log_beta = log(estimate[2]) + log(estimate[3]),
+  summarize(log_beta12 = log(estimate[2]) + log(estimate[3]),
             r_squared = r.squared)|>
   distinct()
 
 ```
 
 
+## Distribution of log(beta_1 * beta_2)
+
+```{r}
+weather_bootstrap|>
+  ggplot(aes(x=log_beta12))+
+  geom_density() + ggtitle('distribution of log(beta_1 * beta_2)')
+```
+
+
+
+The distribution is skewed to the left. The density is highest when values are around 
+-5 to -6.
+
+
+
+## Distribution of r_squared
 
 
 
