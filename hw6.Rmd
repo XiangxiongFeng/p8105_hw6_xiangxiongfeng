@@ -148,11 +148,43 @@ model1_summary=
   modelr::add_residuals(model1) |> 
   modelr::add_predictions(model1)
 
-model1_summary
+head(model1_summary)
 model1_summary|>
   broom::tidy()
   
 ```
 
 
+## model 2 blength + gaweeks
 
+```{r}
+model2 = lm(bwt ~ blength + gaweeks, data = birth_weight)
+
+model2_summary=
+  birth_weight|>
+  select(bwt, blength , gaweeks) |>
+  modelr::add_residuals(model2) |> 
+  modelr::add_predictions(model2)
+
+head(model2_summary)
+model2_summary|>
+  broom::tidy()
+  
+```
+
+## model 3 bhead + blength + babysex + all interactions
+
+```{r}
+model3 = lm(bwt ~ bhead + blength + babysex + bhead*blength + bhead*babysex + blength*babysex + bhead*blength*babysex,data = birth_weight)
+
+model3_summary=
+  birth_weight|>
+  select(bwt, bhead , blength , babysex) |>
+  modelr::add_residuals(model3) |> 
+  modelr::add_predictions(model3)
+
+
+head(model3_summary)
+
+  
+```
