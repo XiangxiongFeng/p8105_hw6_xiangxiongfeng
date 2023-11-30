@@ -377,7 +377,14 @@ display: none;
 <p>Bootstrap and linear model</p>
 <pre class="r"><code>weather_bootstrap =
   weather_df|&gt;
-  modelr::bootstrap(n = 5000)</code></pre>
+  modelr::bootstrap(n = 5000)|&gt;
+  mutate(
+    models = map(strap, \(df) lm(tmax ~ tmin + prcp, data = df)),
+    tidy_results = map(models, broom::tidy),
+    glance_rsqures = map(models, broom::glance))</code></pre>
+<pre><code>results = map(models, broom::tidy)) |&gt; </code></pre>
+<p>select(-strap, -models) |&gt; unnest(results) |&gt; group_by(term)
+|&gt; summarize(boot_se = sd(estimate)) ```</p>
 </div>
 
 

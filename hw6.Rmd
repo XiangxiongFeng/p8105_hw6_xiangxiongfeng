@@ -55,7 +55,18 @@ Bootstrap and linear model
 ```{r}
 weather_bootstrap =
   weather_df|>
-  modelr::bootstrap(n = 5000)
+  modelr::bootstrap(n = 5000)|>
+  mutate(
+    models = map(strap, \(df) lm(tmax ~ tmin + prcp, data = df)),
+    tidy_results = map(models, broom::tidy),
+    glance_rsqures = map(models, broom::glance))
+    
+```
+    results = map(models, broom::tidy)) |> 
+  select(-strap, -models) |> 
+  unnest(results) |> 
+  group_by(term) |> 
+  summarize(boot_se = sd(estimate))
 ```
 
 
