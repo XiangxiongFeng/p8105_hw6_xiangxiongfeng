@@ -10,6 +10,7 @@ library(tidyverse)
 library(viridis)
 library(modelr)
 library(p8105.datasets)
+library(mgcv)
 
 knitr::opts_chunk$set(
 	echo = TRUE,
@@ -113,3 +114,23 @@ CI_rsquared_log_beta12
 ```
 
 2.5% and 97.5% quantiles (confident Interval) of R squared and log(beta 1*beta 2) are shown above.
+
+
+
+
+
+
+# Problem 3
+
+
+```{r}
+birth_weight = 
+  read.csv('data/birthweight.csv')|>
+  janitor::clean_names()|>
+  drop_na()|>
+  mutate(
+    babysex = as.factor(babysex)
+  )
+```
+
+
