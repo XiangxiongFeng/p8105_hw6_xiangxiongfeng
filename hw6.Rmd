@@ -88,7 +88,12 @@ The distribution is skewed to the left. The density is highest when values are a
 
 ## Distribution of r_squared
 
-
+```{r}
+weather_bootstrap|>
+  ggplot(aes(x=r_squared))+
+  geom_density() + ggtitle('distribution of r_squared ')
+```
+The distribution is relatively normal but still skewed to the left a little bit. The density is highest when values are around 0.92.
 
 
 
