@@ -129,8 +129,30 @@ birth_weight =
   janitor::clean_names()|>
   drop_na()|>
   mutate(
-    babysex = as.factor(babysex)
+    babysex = as.factor(babysex),
+    frace = as.factor(frace),
+    mrace = as.factor(mrace)
+    
   )
 ```
+
+
+## model 1 bhead + wtgain +mheigth
+
+```{r}
+model1 = lm(bwt ~ bhead + wtgain +mheight, data = birth_weight)
+
+model1_summary=
+  birth_weight|>
+  select(bwt, bhead , wtgain ,mheight) |>
+  modelr::add_residuals(model1) |> 
+  modelr::add_predictions(model1)
+
+model1_summary
+model1_summary|>
+  broom::tidy()
+  
+```
+
 
 
