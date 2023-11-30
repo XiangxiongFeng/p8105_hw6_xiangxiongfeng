@@ -1,0 +1,13 @@
+---
+title: "Untitled"
+author: "Xiangxiong Feng"
+date: "2023-11-30"
+output: html_document
+---
+
+# Problem 2 
+
+```{r}
+
+```
+
