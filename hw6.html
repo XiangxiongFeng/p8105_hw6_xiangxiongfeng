@@ -357,12 +357,10 @@ display: none;
 </div>
 
 
-<pre><code>
-# Problem 2 
-
-
-```r
-weather_df = 
+<div id="problem-2" class="section level1">
+<h1>Problem 2</h1>
+<p>Download dataset</p>
+<pre class="r"><code>weather_df = 
   rnoaa::meteo_pull_monitors(
     c(&quot;USW00094728&quot;),
     var = c(&quot;PRCP&quot;, &quot;TMIN&quot;, &quot;TMAX&quot;), 
@@ -376,6 +374,11 @@ weather_df =
 <pre><code>## using cached file: C:\Users\gdso\AppData\Local/R/cache/R/rnoaa/noaa_ghcnd/USW00094728.dly</code></pre>
 <pre><code>## date created (size, mb): 2023-10-13 16:03:07.606289 (8.551)</code></pre>
 <pre><code>## file min/max dates: 1869-01-01 / 2023-10-31</code></pre>
+<p>Bootstrap and linear model</p>
+<pre class="r"><code>weather_bootstrap =
+  weather_df|&gt;
+  modelr::bootstrap(n = 5000)</code></pre>
+</div>
 
 
 

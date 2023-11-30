@@ -31,9 +31,10 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 
 ```
-```
 
 # Problem 2 
+
+Download dataset
 
 ```{r}
 weather_df = 
@@ -49,10 +50,13 @@ weather_df =
   select(name, id, everything())
 ```
 
+Bootstrap and linear model
 
-
-
-
+```{r}
+weather_bootstrap =
+  weather_df|>
+  modelr::bootstrap(n = 5000)
+```
 
 
 
